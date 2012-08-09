@@ -1,0 +1,29 @@
+<div class="eight columns">
+
+  <% @posts.each do |post| %>
+
+    <div class="row">
+      <div class="nine columns">
+        <h3><%= post.title %></h3>
+      </div>
+      <div class="three columns date">
+        <%= l post.created_at.to_date %>
+      </div>
+    </div>
+
+    <div class="panel">
+      <p><%= post.content %></p>
+      <a href="#">Full text</a>
+    </div>
+
+  <% end %>
+
+  <div>
+    <a href="#"><< Back</a>
+    <a href="#">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+    <a href="#">Next >></a>
+  </div>
+
+</div>

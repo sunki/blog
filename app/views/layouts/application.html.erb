@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Welcome to Foundation</title>
+
+  <!-- IE Fix for HTML5 Tags -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%#= csrf_meta_tags %>
+
+</head>
+<body>
+<div class="row header">
+  <div class="twelve columns">
+    <h2>Maxim Chvertkin</h2>
+    <p>Rails adept.</p>
+    <hr />
+  </div>
+</div>
+<div class="row content">
+
+  <%= yield %>
+
+  <div class="three columns sb">
+    <h4>@me</h4>
+
+    <ul class="disc sb-me">
+      <li>Advanced Ruby on Rails development</li>
+      <li>Rich Internet Applications</li>
+      <li>Highload</li>
+      <li>API and GEM design</li>
+      <li>DSL and metaprogramming</li>
+      <li>SQL design and optimization</li>
+      <li>Debian/Ubuntu managing</li>
+    </ul>
+
+    <a href="foo@bar.com">foo@bar.com</a>
+
+  </div>
+</div> <!-- content -->
+
+
+
+<!-- Included JS Files (Uncompressed) -->
+<!--
+
+<script src="javascripts/modernizr.foundation.js"></script>
+
+<script src="javascripts/jquery.js"></script>
+
+<script src="javascripts/jquery.foundation.reveal.js"></script>
+
+<script src="javascripts/jquery.foundation.orbit.js"></script>
+
+<script src="javascripts/jquery.foundation.navigation.js"></script>
+
+<script src="javascripts/jquery.foundation.buttons.js"></script>
+
+<script src="javascripts/jquery.foundation.tabs.js"></script>
+
+<script src="javascripts/jquery.foundation.forms.js"></script>
+
+<script src="javascripts/jquery.foundation.tooltips.js"></script>
+
+<script src="javascripts/jquery.foundation.accordion.js"></script>
+
+<script src="javascripts/jquery.placeholder.js"></script>
+
+<script src="javascripts/jquery.foundation.alerts.js"></script>
+
+-->
+
+<!-- Included JS Files (Compressed) -->
+<%= javascript_include_tag "foundation" %>
+<!-- Initialize JS Plugins -->
+<%= javascript_include_tag "app" %>
+
+</body>
+</html>

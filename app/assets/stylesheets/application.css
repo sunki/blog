@@ -1,0 +1,75 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require foundation
+ *= require_self
+ */
+
+/* Artfully masterminded by ZURB  */
+
+/* --------------------------------------------------
+   Table of Contents
+-----------------------------------------------------
+:: Shared Styles
+:: Page Name 1
+:: Page Name 2
+*/
+
+/* Containers */
+
+body {
+    color: #313131;
+}
+
+@media screen {
+    .header {
+        max-width: 60%;
+        float: none !important;
+        width: auto !important;
+    }
+    .content {
+        max-width: 60%;
+        float: none !important;
+        width: auto !important;
+    }
+}
+
+.date {
+    text-align: right;
+    margin: 26px 0 0 0;
+}
+
+.sb {
+    /*min-width: 280px;*/
+}
+
+.sb-me li {
+    font-size: 12px;
+}
+
+
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
+
+
+/* -----------------------------------------
+   Page Name 1
+----------------------------------------- */
+
+
+
+
+/* -----------------------------------------
+   Page Name 2
+----------------------------------------- */
+
+
