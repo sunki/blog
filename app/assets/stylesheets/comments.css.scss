@@ -1,0 +1,33 @@
+// Place all the styles related to the comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.comments .columns {
+  margin: 5px 0 2px 0;
+}
+
+.comments .comments-header {
+  margin: 0 0 10px 0;
+}
+
+.comments textarea {
+  height: 70px;
+  font-size: 13px;
+}
+
+.comments .panel, .comments .date, .comments a {
+  font-size: 13px;
+}
+
+.comments .date {
+
+}
+
+.comments .panel {
+  margin:  0 0 5px 0;
+  padding: 10px;
+}
+
+.comments .answer {
+  padding: 5px 0 0 0;
+}

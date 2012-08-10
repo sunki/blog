@@ -10,6 +10,7 @@
  *
  *= require foundation
  *= require_self
+ *= require comments
  */
 
 /* Artfully masterminded by ZURB  */
@@ -38,12 +39,17 @@ body {
         max-width: 60%;
         float: none !important;
         width: auto !important;
+        margin-bottom: 50px;
     }
 }
 
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
 .date {
     text-align: right;
-    margin: 26px 0 0 0;
+    margin: 26px 0 17px 0;
 }
 
 .sb {
@@ -54,12 +60,9 @@ body {
     font-size: 12px;
 }
 
-
-/* -----------------------------------------
-   Shared Styles
------------------------------------------ */
-
-
+.pagination {
+    margin-top: 35px;
+}
 
 /* -----------------------------------------
    Page Name 1

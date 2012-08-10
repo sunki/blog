@@ -11,7 +11,7 @@
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width" />
 
-  <title>Welcome to Foundation</title>
+  <title><%= build_title('Maxim Chvertkin') %></title>
 
   <!-- IE Fix for HTML5 Tags -->
   <!--[if lt IE 9]>
@@ -19,14 +19,13 @@
   <![endif]-->
 
   <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%#= csrf_meta_tags %>
+  <%= csrf_meta_tags %>
 
 </head>
 <body>
 <div class="row header">
   <div class="twelve columns">
-    <h2>Maxim Chvertkin</h2>
+    <h2><a href="/">Maxim Chvertkin</a></h2>
     <p>Rails adept.</p>
     <hr />
   </div>
@@ -44,6 +43,7 @@
       <li>Highload</li>
       <li>API and GEM design</li>
       <li>DSL and metaprogramming</li>
+      <li>Functional & Integration testing</li>
       <li>SQL design and optimization</li>
       <li>Debian/Ubuntu managing</li>
     </ul>
@@ -88,6 +88,8 @@
 <%= javascript_include_tag "foundation" %>
 <!-- Initialize JS Plugins -->
 <%= javascript_include_tag "app" %>
+
+<%= javascript_include_tag "application" %>
 
 </body>
 </html>

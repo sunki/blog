@@ -1,0 +1,22 @@
+<% item ||= @comment  %>
+
+<div class="row">
+  <div class="nine columns">
+    <%= item.user && item.user.name %>
+  </div>
+  <div class="three columns date">
+    <%= l item.created_at.to_date %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel">
+      <%= item.content %>
+
+      <p class="answer">
+        <a href="#" onclick="append_comment_form(this); return false;">Ответить</a>
+      </p>
+    </div>
+  </div>
+</div>

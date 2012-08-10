@@ -13,17 +13,13 @@
 
     <div class="panel">
       <p><%= post.content %></p>
-      <a href="#">Full text</a>
+      <a href="<%= post_path(post) %>">Full text</a>
     </div>
 
   <% end %>
 
-  <div>
-    <a href="#"><< Back</a>
-    <a href="#">1</a>
-    <a href="#">2</a>
-    <a href="#">3</a>
-    <a href="#">Next >></a>
+  <div class="pagination">
+    <%= paginate @posts, :window => 2 %>
   </div>
 
 </div>
