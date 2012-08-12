@@ -1,6 +1,6 @@
 <div class="row">
   <div class="twelve columns">
-    <%= form_for @comment, :remote => true, :html => {:'data-type' => 'html'} do |f| %>
+    <%= form_for @comment, :as => :items, :remote => true, :html => {:'data-type' => 'html'} do |f| %>
       <div class="validation-error"></div>
 
       <%= f.text_area    :content %>

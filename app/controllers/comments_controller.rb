@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   layout false
 
   def create
-    @comment = Comment.new params[:comment]
+    @comment = Comment.new params[:items]
     @comment.save ? render(:_item) : render_error(@comment.errors)
   end
 

@@ -22,7 +22,9 @@
     </div>
 
     <%= render :partial => 'comments/form', :locals => { :post => @post } %>
-    <%= render :partial => 'comments/item', :collection => @post.comments %>
+    <%#= render :partial => 'comments/item', :collection => @post.comments %>
+
+    <%= raw render_comments(@post.comments) %>
 
   </div>
 

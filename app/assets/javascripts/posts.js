@@ -2,7 +2,7 @@
 //# All this logic will automatically be available in application.js.
 //# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-var new_comments_binder = function(element, target){
+var new_comments_binder = function(element, target, parent){
 
     $(element)
         .bind("ajax:beforeSend", function(evt, xhr, settings){
@@ -12,7 +12,7 @@ var new_comments_binder = function(element, target){
 // But first, store the original text of the submit button, so it can be restored when the request is finished.
             $submitButton.data( 'origText', $(this).text() );
             $submitButton.text( "Submitting..." );
-
+            $(target)
         })
         .bind("ajax:success", function(evt, data, status, xhr){
             var $form = $(this);
@@ -22,8 +22,20 @@ var new_comments_binder = function(element, target){
             $form.find('div.validation-error').empty();
 
 // Insert response partial into page below the form.
-            $(target).after(xhr.responseText);
+            var new_comment = xhr.responseText;
+            var target_div = $(target);
+            var parent_div = $(parent);
 
+            if(!parent_div.length) {
+                target_div.append(new_comment);
+            }
+            else if(target_div.length) {
+                target_div.append('<div id="children-' + target_div.attr('id') + '" class="comments-children">' + new_comment + '</div>');
+            }
+            else {
+                alert(target);
+                parent_div.after('<div id="children-' + parent_div.attr('id') + '" class="comments-children">' + new_comment + '</div>');
+            }
         })
         .bind('ajax:complete', function(evt, xhr, status){
             var $submitButton = $(this).find('input[name="commit"]');
@@ -62,5 +74,5 @@ var new_comments_binder = function(element, target){
 
 }
 
-$(document).ready(new_comments_binder('#new_comment', '#comments .row:last'));
+$(document).ready(new_comments_binder('#new_items', '#comments'));
 
