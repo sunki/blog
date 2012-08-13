@@ -4,18 +4,19 @@
 
 var new_comments_binder = function(element, parent_id){
 
-    var textarea = $(element).find('textarea');
+    var input = $(element).find('input, textarea');
+    var submitButton = $(element).find('input[name="commit"]');
 
     $(element)
         .bind("ajax:beforeSend", function(evt, xhr, settings){
-            var $submitButton = $(this).find('input[name="commit"]');
 
 // Update the text of the submit button to let the user know stuff is happening.
 // But first, store the original text of the submit button, so it can be restored when the request is finished.
 
-            $(this).data( 'origText', $submitButton.attr('value') );
-            $submitButton.attr( 'value', "Отправка данных..." );
-            textarea.attr('disabled', 'disabled');
+            $(this).data( 'origText', submitButton.attr('value') );
+            submitButton.attr( 'value', "Отправка данных..." );
+
+            input.attr('disabled', 'disabled');
         })
         .bind("ajax:success", function(evt, data, status, xhr){
             var $form = $(this);
@@ -44,12 +45,12 @@ var new_comments_binder = function(element, parent_id){
             }
         })
         .bind('ajax:complete', function(evt, xhr, status){
-            var $submitButton = $(this).find('input[name="commit"]');
 
 // Restore the original submit button text
 
-            $submitButton.attr( 'value', $(this).data('origText') );
-            textarea.removeAttr('disabled');
+            submitButton.attr( 'value', $(this).data('origText') );
+
+            input.removeAttr('disabled');
         })
         .bind("ajax:error", function(evt, xhr, status, error){
             var $form = $(this),
