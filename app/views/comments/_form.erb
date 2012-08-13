@@ -5,6 +5,11 @@
 
       <%= f.text_area    :content %>
       <%= f.hidden_field :post_id, :value => post.id %>
+
+      <div style="position: absolute; left: -2000px;">
+        <%= f.hidden_field :token %>
+      </div>
+
       <%= f.submit 'Сохранить', :class => 'small radius button' %>
     <% end %>
   </div>

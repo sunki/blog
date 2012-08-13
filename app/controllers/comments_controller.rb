@@ -15,6 +15,7 @@ class CommentsController < ApplicationController
   private
 
   def render_error errors
+    errors.delete :token
     render :json => errors, :status => :unprocessable_entity
   end
 

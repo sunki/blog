@@ -4,6 +4,10 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :post_id, :content
 
-  attr_accessible :post_id, :content, :parent_id
+  validates_length_of :token, :maximum => 0 # Honeypot
+
+  attr_accessible :post_id, :content, :parent_id, :token
+
+  attr_accessor :token
 
 end
