@@ -63,24 +63,18 @@ var new_comments_binder = function(element, parent_id){
             try {
 // Populate errorText with the comment errors
                 errors = $.parseJSON(xhr.responseText);
+
+                for ( error in errors ) {
+                    //errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
+                    var item = $(this).find('#items_' + error);
+                    item.addClass('error');
+                    item.after('<small class="error">' + errors[error] + '</small>')
+                }
             } catch(err) {
 // If the responseText is not valid JSON (like if a 500 exception was thrown), populate errors with a generic error message.
-                errors = {message: "Please reload the page and try again"};
+
+                $form.find('div.validation-error').html('Неизвестная ошибка, попробуйте чуть позже').addClass('alert-box alert');
             }
-
-// Build an unordered list from the list of errors
-
-            for ( error in errors ) {
-                //errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
-                var item = $(this).find('#items_' + error);
-                item.addClass('error');
-                item.after('<small class="error">' + errors[error] + '</small>')
-            }
-
-            errorText  = 'Ошибка при сохранении комментария';
-
-// Insert error list into form
-            //$form.find('div.validation-error').html(errorText).addClass('alert-box alert');
         })
         .bind('click',function(){
             //this.unbind();

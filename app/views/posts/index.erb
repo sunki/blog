@@ -4,7 +4,7 @@
 
     <div class="row">
       <div class="nine columns">
-        <h3><%= post.title %></h3>
+        <h3><%= link_to post.title, post_path(post) %></h3>
       </div>
       <div class="three columns date">
         <%= l post.created_at.to_date %>
@@ -13,7 +13,7 @@
 
     <div class="panel">
       <p><%= post.content %></p>
-      <a href="<%= post_path(post) %>">Full text</a>
+      <a href="<%= post_path(post) %>">Читать полностью...</a>
     </div>
 
   <% end %>
