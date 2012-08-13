@@ -4,14 +4,19 @@
 
 var new_comments_binder = function(element, parent_id){
 
+    var $form = $(element);
     var input = $(element).find('input, textarea');
     var submitButton = $(element).find('input[name="commit"]');
 
-    $(element)
+    $form
         .bind("ajax:beforeSend", function(evt, xhr, settings){
 
 // Update the text of the submit button to let the user know stuff is happening.
 // But first, store the original text of the submit button, so it can be restored when the request is finished.
+
+            $form.find('div.validation-error').empty().removeClass('alert-box');
+            $form.find('small.error').remove();
+            $form.find('.error').removeClass('error');
 
             $(this).data( 'origText', submitButton.attr('value') );
             submitButton.attr( 'value', "Отправка данных..." );
@@ -19,11 +24,9 @@ var new_comments_binder = function(element, parent_id){
             input.attr('disabled', 'disabled');
         })
         .bind("ajax:success", function(evt, data, status, xhr){
-            var $form = $(this);
 
 // Reset fields and any validation errors, so form can be used again, but leave hidden_field values intact.
             $form.find('textarea,input[type="text"],input[type="file"]').val("");
-            $form.find('div.validation-error').empty();
 
 // Insert response partial into page below the form.
             var new_comment = xhr.responseText;
@@ -66,16 +69,18 @@ var new_comments_binder = function(element, parent_id){
             }
 
 // Build an unordered list from the list of errors
-            errorText = "There were errors with the submission: \n<ul>";
 
             for ( error in errors ) {
-                errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
+                //errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
+                var item = $(this).find('#items_' + error);
+                item.addClass('error');
+                item.after('<small class="error">' + errors[error] + '</small>')
             }
 
-            errorText += "</ul>";
+            errorText  = 'Ошибка при сохранении комментария';
 
 // Insert error list into form
-            $form.find('div.validation-error').html(errorText);
+            //$form.find('div.validation-error').html(errorText).addClass('alert-box alert');
         })
         .bind('click',function(){
             //this.unbind();
