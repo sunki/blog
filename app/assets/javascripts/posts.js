@@ -2,7 +2,9 @@
 //# All this logic will automatically be available in application.js.
 //# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-var new_comments_binder = function(element, target, parent){
+var new_comments_binder = function(element, parent_id){
+
+    var textarea = $(element).find('textarea');
 
     $(element)
         .bind("ajax:beforeSend", function(evt, xhr, settings){
@@ -10,9 +12,10 @@ var new_comments_binder = function(element, target, parent){
 
 // Update the text of the submit button to let the user know stuff is happening.
 // But first, store the original text of the submit button, so it can be restored when the request is finished.
-            $submitButton.data( 'origText', $(this).text() );
-            $submitButton.text( "Submitting..." );
-            $(target)
+
+            $(this).data( 'origText', $submitButton.attr('value') );
+            $submitButton.attr( 'value', "Отправка данных..." );
+            textarea.attr('disabled', 'disabled');
         })
         .bind("ajax:success", function(evt, data, status, xhr){
             var $form = $(this);
@@ -23,25 +26,30 @@ var new_comments_binder = function(element, target, parent){
 
 // Insert response partial into page below the form.
             var new_comment = xhr.responseText;
-            var target_div = $(target);
-            var parent_div = $(parent);
+            var root = $('#comments');
 
-            if(!parent_div.length) {
-                target_div.append(new_comment);
-            }
-            else if(target_div.length) {
-                target_div.append('<div id="children-' + target_div.attr('id') + '" class="comments-children">' + new_comment + '</div>');
+            if(!parent_id) {
+                root.append(new_comment);
             }
             else {
-                alert(target);
-                parent_div.after('<div id="children-' + parent_div.attr('id') + '" class="comments-children">' + new_comment + '</div>');
+                var children = $('#children-' + parent_id);
+                var comment  = $('#comment-' + parent_id);
+
+                if(children.length) {
+                    children.append(new_comment);
+                }
+                else {
+                    comment.after('<div id="children-' + parent_id + '" class="comments-children">' + new_comment + '</div>');
+                }
             }
         })
         .bind('ajax:complete', function(evt, xhr, status){
             var $submitButton = $(this).find('input[name="commit"]');
 
 // Restore the original submit button text
-            $submitButton.text( $(this).data('origText') );
+
+            $submitButton.attr( 'value', $(this).data('origText') );
+            textarea.removeAttr('disabled');
         })
         .bind("ajax:error", function(evt, xhr, status, error){
             var $form = $(this),
@@ -74,5 +82,5 @@ var new_comments_binder = function(element, target, parent){
 
 }
 
-$(document).ready(new_comments_binder('#new_items', '#comments'));
+$(document).ready(new_comments_binder('#new_items'));
 
