@@ -5,7 +5,7 @@
 function append_comment_form(element, parent_id) {
     $('.comments-answer').html('');
 
-    var form = $('#new_items').parents('.row:first').clone();
+    var form = $('#new_items').clone();
 
     form.addClass('comments-answer');
     form.append('<input type="hidden" name="items[parent_id]" value="' + parent_id +'" />');

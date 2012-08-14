@@ -2,11 +2,14 @@ module CommentsHelper
 
   def render_comments comments
     return if comments.blank?
-
     html = ''
+
     @comments = comments.group_by(&:parent_id)
 
-    @comments[nil].each { |item| render_item item, html }
+    root_comments = @comments[nil]
+    return if !root_comments
+
+    root_comments.each { |item| render_item item, html }
     html
   end
 
