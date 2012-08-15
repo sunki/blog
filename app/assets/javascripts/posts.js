@@ -80,5 +80,7 @@ var new_comments_binder = function(element, parent_id){
 
 }
 
-$(document).ready(new_comments_binder('#new_items'));
+$(document).ready(function() {
+    new_comments_binder('#new_items');
+});
 
