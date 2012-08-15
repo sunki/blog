@@ -1,0 +1,12 @@
+<%= javascript_include_tag 'tiny_mce/tiny_mce' %>
+
+<script type="text/javascript">
+  tinyMCE.init({
+    mode     : 'exact',
+    elements : 'items_content'
+  });
+</script>
+
+<%= form_for @post, :as => :items do |f| %>
+  <%= f.text_area :content %>
+<% end %>

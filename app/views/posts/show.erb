@@ -1,31 +1,27 @@
-<div class="eight columns">
+<div class="row">
+  <div class="nine columns">
+    <h3><%= @post.title %></h3>
+  </div>
+  <div class="three columns date">
+    <%= l @post.created_at.to_date %>
+  </div>
+</div>
+
+<div class="panel">
+  <p><%= @post.content %></p>
+</div>
+
+<div id="comments" class="comments">
 
   <div class="row">
-    <div class="nine columns">
-      <h3><%= @post.title %></h3>
-    </div>
-    <div class="three columns date">
-      <%= l @post.created_at.to_date %>
+    <div class="twelve columns comments-header">
+      Оставить комментарий
     </div>
   </div>
 
-  <div class="panel">
-    <p><%= @post.content %></p>
-  </div>
+  <%= render :partial => 'comments/form', :locals => { :post => @post } %>
+  <%#= render :partial => 'comments/item', :collection => @post.comments %>
 
-  <div id="comments" class="comments">
-
-    <div class="row">
-      <div class="twelve columns comments-header">
-        Оставить комментарий
-      </div>
-    </div>
-
-    <%= render :partial => 'comments/form', :locals => { :post => @post } %>
-    <%#= render :partial => 'comments/item', :collection => @post.comments %>
-
-    <%= raw render_comments(@post.comments) %>
-
-  </div>
+  <%= raw render_comments(@post.comments) %>
 
 </div>
