@@ -7,8 +7,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  helper_method :log
+
   rescue_from ActiveRecord::RecordNotFound do
     render_404
+  end
+
+  def log message
+    Rails.logger.debug message.inspect
   end
 
 end
