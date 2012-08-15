@@ -10,6 +10,8 @@ class Post < ActiveRecord::Base
 
   attr_accessible :title, :desc, :content
 
+  scope :published, where('1=1')
+
   def to_param
     slug
   end

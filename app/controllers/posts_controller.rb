@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
   def index
-    @posts = Post.page params[:page]
+    @posts = Post.published.order('id DESC').page params[:page]
   end
 
   def show
@@ -14,7 +14,7 @@ class PostsController < ApplicationController
   end
 
   def edit
-
+    @post.find params[:id]
   end
 
   def create

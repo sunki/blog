@@ -8,5 +8,7 @@
 </script>
 
 <%= form_for @post, :as => :items do |f| %>
+  <%= f.text_field :title %>
   <%= f.text_area :content %>
+  <%= f.submit %>
 <% end %>
