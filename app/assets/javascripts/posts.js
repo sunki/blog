@@ -5,7 +5,7 @@
 var new_comments_binder = function(element, parent_id){
 
     var $form = $(element);
-    var input = $(element).find('input, textarea');
+    //var input = $(element).find('input, textarea');
     var submitButton = $(element).find('input[name="commit"]');
 
     $form
@@ -20,8 +20,7 @@ var new_comments_binder = function(element, parent_id){
 
             $(this).data( 'origText', submitButton.attr('value') );
             submitButton.attr( 'value', "Отправка данных..." );
-
-            input.attr('disabled', 'disabled');
+            submitButton.attr('disabled', 'disabled');
         })
         .bind("ajax:success", function(evt, data, status, xhr){
 
@@ -52,8 +51,7 @@ var new_comments_binder = function(element, parent_id){
 // Restore the original submit button text
 
             submitButton.attr( 'value', $(this).data('origText') );
-
-            input.removeAttr('disabled');
+            submitButton.removeAttr('disabled');
         })
         .bind("ajax:error", function(evt, xhr, status, error){
             var $form = $(this),
