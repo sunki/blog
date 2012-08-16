@@ -14,17 +14,31 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post.find params[:id]
+    @post = Post.find params[:id]
+    render :new
   end
 
   def create
     @post = Post.new params[:items]
-    @post.save ? redirect_to('/') : render(:new)
+    render_save @post.save
   end
 
   def update
     @post = Post.find params[:id]
-    @post.update_attributes(params[:items]) ? redirect_to('/') : render(:new)
+    render_save @post.update_attributes(params[:items])
+  end
+
+  private
+
+  def render_save is_saved
+    respond_to do |format|
+      if is_saved
+        format.html { redirect_to post_path(@post) }
+      else
+        format.html { render :new }
+        format.json { render :json => @post.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
 end

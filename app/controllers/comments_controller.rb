@@ -4,19 +4,25 @@ class CommentsController < ApplicationController
 
   def create
     @comment = Comment.new params[:items]
-    @comment.save ? render(:_item) : render_error(@comment.errors)
+    render_save @comment.save
   end
 
   def update
     @comment = Comment.find params[:id]
-    @comment.update_attributes(params[:items]) ? render(:_item) : render_error(@comment.errors)
+    render_save @comment.update_attributes(params[:items])
   end
 
   private
 
-  def render_error errors
-    errors.delete :token
-    render :json => errors, :status => :unprocessable_entity
+  def render_save is_saved
+    if is_saved
+      render(:_item)
+    else
+      errors = @comment.errors
+      errors.delete :token
+
+      render :json => errors, :status => :unprocessable_entity
+    end
   end
 
 end

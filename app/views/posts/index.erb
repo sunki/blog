@@ -10,7 +10,7 @@
   </div>
 
   <div class="panel">
-    <p><%= post.content %></p>
+    <%= sanitize post.content %>
     <a href="<%= post_path(post) %>">Читать полностью...</a>
   </div>
 

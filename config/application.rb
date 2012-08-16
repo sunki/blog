@@ -60,5 +60,11 @@ module Blog
     config.assets.version = '1.0'
 
     config.active_record.timestamped_migrations = false
+
+    # Add tags to the default list
+    #config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td'
+
+    # Remove tags from the default list
+    ActionView::Base.sanitized_allowed_tags.delete 'div'
   end
 end

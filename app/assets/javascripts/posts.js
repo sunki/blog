@@ -84,3 +84,30 @@ $(document).ready(function() {
     new_comments_binder('#new_items');
 });
 
+var tiny_ajax_save = function() {
+    $.ajax({
+        type: 'POST',
+        url: '/posts',
+        data: 'items[content]=' + escape($('#items_content').val()),
+        dataType: 'json',
+        success: function(data) {
+            //alert(data);
+        },
+        error: function(data) {
+            try {
+                var errors = $.parseJSON(data);
+
+                for ( error in errors ) {
+                    //errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
+                    var item = $(this).find('#items_' + error);
+                    item.addClass('error');
+                    item.after('<small class="error">' + errors[error] + '</small>')
+                }
+            } catch(err) {
+
+                $form.find('div.validation-error').html('Неизвестная ошибка, попробуйте чуть позже').addClass('alert-box alert');
+            }
+        }
+    });
+}
+
