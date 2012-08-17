@@ -34,6 +34,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if is_saved
         format.html { redirect_to post_path(@post) }
+        format.json { render :json => {} }
       else
         format.html { render :new }
         format.json { render :json => @post.errors, :status => :unprocessable_entity }

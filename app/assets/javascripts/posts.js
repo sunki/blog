@@ -2,111 +2,120 @@
 //# All this logic will automatically be available in application.js.
 //# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-var new_comments_binder = function(element, parent_id){
+var items_errors_clean = function(form) {
+    form.find('div.validation-error').empty().removeClass('alert-box');
+    form.find('small.error').remove();
+    form.find('.error').removeClass('error');
+}
 
-    var $form = $(element);
-    //var input = $(element).find('input, textarea');
+var items_submit_process = function(form, button) {
+    form.data( 'origText', button.attr('value') );
+    button.attr( 'value', "Отправка данных..." );
+    button.attr('disabled', 'disabled');
+}
+
+var items_submit_complete = function(form, button) {
+    button.attr( 'value', form.data('origText') );
+    button.removeAttr('disabled');
+}
+
+var items_errors_handle = function(form, xhr) {
+    try {
+        var error;
+        var errors = $.parseJSON(xhr.responseText);
+
+        for ( error in errors ) {
+
+            var item = form.find('#items_' + error);
+
+            item.addClass('error');
+            item.after('<small class="error">' + errors[error] + '</small>')
+        }
+    } catch(err) {
+// If the responseText is not valid JSON (like if a 500 exception was thrown), populate errors with a generic error message.
+
+        form.find('div.validation-error').html('Неизвестная ошибка, попробуйте чуть позже').addClass('alert-box alert');
+    }
+}
+
+var new_items_bind = function(element, parent_id, after_save) {
+
+    var form = $(element);
     var submitButton = $(element).find('input[name="commit"]');
 
-    $form
+    form
         .bind("ajax:beforeSend", function(evt, xhr, settings){
 
-// Update the text of the submit button to let the user know stuff is happening.
-// But first, store the original text of the submit button, so it can be restored when the request is finished.
-
-            $form.find('div.validation-error').empty().removeClass('alert-box');
-            $form.find('small.error').remove();
-            $form.find('.error').removeClass('error');
-
-            $(this).data( 'origText', submitButton.attr('value') );
-            submitButton.attr( 'value', "Отправка данных..." );
-            submitButton.attr('disabled', 'disabled');
+            items_errors_clean(form);
+            items_submit_process(form, submitButton);
         })
         .bind("ajax:success", function(evt, data, status, xhr){
 
 // Reset fields and any validation errors, so form can be used again, but leave hidden_field values intact.
-            $form.find('textarea,input[type="text"],input[type="file"]').val("");
+            form.find('textarea,input[type="text"],input[type="file"]').val("");
 
-// Insert response partial into page below the form.
-            var new_comment = xhr.responseText;
-            var root = $('#comments');
-
-            if(!parent_id) {
-                root.append(new_comment);
-            }
-            else {
-                var children = $('#children-' + parent_id);
-                var comment  = $('#comment-' + parent_id);
-
-                if(children.length) {
-                    children.append(new_comment);
-                }
-                else {
-                    comment.after('<div id="children-' + parent_id + '" class="comments-children">' + new_comment + '</div>');
-                }
-            }
+            after_save(xhr);
         })
         .bind('ajax:complete', function(evt, xhr, status){
+            //var form = $(this);
 
-// Restore the original submit button text
-
-            submitButton.attr( 'value', $(this).data('origText') );
-            submitButton.removeAttr('disabled');
+            items_submit_complete(form, submitButton)
         })
         .bind("ajax:error", function(evt, xhr, status, error){
-            var $form = $(this),
-                errors,
-                errorText;
+            //var form = $(this);
 
-            try {
-// Populate errorText with the comment errors
-                errors = $.parseJSON(xhr.responseText);
-
-                for ( error in errors ) {
-                    //errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
-                    var item = $(this).find('#items_' + error);
-                    item.addClass('error');
-                    item.after('<small class="error">' + errors[error] + '</small>')
-                }
-            } catch(err) {
-// If the responseText is not valid JSON (like if a 500 exception was thrown), populate errors with a generic error message.
-
-                $form.find('div.validation-error').html('Неизвестная ошибка, попробуйте чуть позже').addClass('alert-box alert');
-            }
+            items_errors_handle(form, xhr)
         })
-        .bind('click',function(){
-            //this.unbind();
-        });
+}
 
+var new_comments_bind = function(element, parent_id) {
+
+    var after_save = function(xhr) {
+
+        var new_comment = xhr.responseText;
+        var root = $('#comments');
+
+        if(!parent_id) {
+            root.append(new_comment);
+        }
+        else {
+            var children = $('#children-' + parent_id);
+            var comment  = $('#comment-' + parent_id);
+
+            if(children.length) {
+                children.append(new_comment);
+            }
+            else {
+                comment.after('<div id="children-' + parent_id + '" class="comments-children">' + new_comment + '</div>');
+            }
+        }
+    }
+
+    new_items_bind(element, parent_id, after_save);
 }
 
 $(document).ready(function() {
-    new_comments_binder('#new_items');
+    new_comments_bind('#new_items');
 });
 
 var tiny_ajax_save = function() {
+
+    var form = $('#post_form');
+    var message = form.find('div.success-message');
+
+    message.empty().removeClass('alert-box');
+    items_errors_clean(form);
+
     $.ajax({
-        type: 'POST',
-        url: '/posts',
-        data: 'items[content]=' + escape($('#items_content').val()),
+        type: form.attr('method'),
+        url:  form.attr('action'),
+        data: form.serializeArray(),
         dataType: 'json',
         success: function(data) {
-            //alert(data);
+            message.html('Данные сохранены').addClass('alert-box success');
         },
         error: function(data) {
-            try {
-                var errors = $.parseJSON(data);
-
-                for ( error in errors ) {
-                    //errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
-                    var item = $(this).find('#items_' + error);
-                    item.addClass('error');
-                    item.after('<small class="error">' + errors[error] + '</small>')
-                }
-            } catch(err) {
-
-                $form.find('div.validation-error').html('Неизвестная ошибка, попробуйте чуть позже').addClass('alert-box alert');
-            }
+            items_errors_handle(form, data);
         }
     });
 }

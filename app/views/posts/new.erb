@@ -14,7 +14,10 @@
   });
 </script>
 
-<%= form_for @post, :as => :items do |f| %>
+<%= form_for @post, :as => :items, :html => { :id => 'post_form' } do |f| %>
+  <div class="validation-error"></div>
+  <div class="success-message"></div>
+
   <p><%= f.text_field :title %></p>
   <p><%= f.text_area :content %></p>
   <p><%= f.submit 'Сохранить' %></p>

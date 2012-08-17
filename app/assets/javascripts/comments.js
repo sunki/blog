@@ -11,5 +11,5 @@ function append_comment_form(element, parent_id) {
     form.append('<input type="hidden" name="items[parent_id]" value="' + parent_id +'" />');
     $(element).after(form);
 
-    new_comments_binder(form, parent_id);
+    new_comments_bind(form, parent_id);
 }
