@@ -1,4 +1,4 @@
-class Photo < ActiveRecord::Base
+class Photo < UploadedFile
 
   attr_accessible :file
 

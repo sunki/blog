@@ -18,7 +18,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
   #end
 
   def extension_white_list
-    %w[ jpg jpeg gif png ]
+    %w[ txt jpg jpeg gif png ]
   end
 
   version :thumb do
@@ -34,12 +34,9 @@ class PhotoUploader < CarrierWave::Uploader::Base
     @dimensions = { :width => width, :height => height }
   end
 
-  CarrierWave::SanitizedFile.sanitize_regexp = /[^a-zA-Zа-яА-ЯёЁ0-9\.\-_]/u
-
   def filename
     if original_filename
-      fname = I18n.transliterate original_filename
-      fname_parts = fname.split('.')
+      fname_parts = original_filename.split('.')
       "#{fname_parts[0]}-#{Time.now.to_i}.#{fname_parts[1]}"
     end
   end

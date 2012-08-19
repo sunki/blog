@@ -1,6 +1,7 @@
-class CreatePhotos < ActiveRecord::Migration
+class CreateUploadedFiles < ActiveRecord::Migration
   def change
-    create_table :photos do |t|
+    create_table :uploaded_files do |t|
+      t.string  :type
       t.string  :file
       t.integer :thumb_width
       t.integer :thumb_height
