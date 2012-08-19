@@ -1,11 +1,29 @@
 <%= javascript_include_tag 'tiny_mce/tiny_mce' %>
+<%= javascript_include_tag 'plupload/plupload.full' %>
+
+<script type="text/javascript">
+  $(function() {
+    uploader_bind(new plupload.Uploader({
+      runtimes      : 'gears,html5,flash,silverlight,browserplus,html4',
+      browse_button : 'uploader-select',
+      container     : 'uploader',
+      url           : '/photos',
+      flash_swf_url : '/assets/plupload/plupload.flash.swf',
+      silverlight_xap_url : '/assets/plupload/plupload.silverlight.xap',
+      filters : [
+        { title : "Image files", extensions : "jpg,jpeg,gif,png" }
+      ]
+      //resize : {width : 320, height : 240, quality : 90}
+    }));
+  });
+</script>
 
 <script type="text/javascript">
   tinyMCE.init({
     mode     : 'exact',
     elements : 'items_content',
-    theme : "advanced",
-    plugins : "save",
+    theme    : "advanced",
+    plugins  : "save",
     theme_advanced_buttons1_add_before : "save, separator",
     save_onsavecallback : 'tiny_ajax_save',
     theme_advanced_resizing : true,
@@ -19,6 +37,14 @@
   <div class="success-message"></div>
 
   <p><%= f.text_field :title %></p>
+
+  <div id="uploader">
+    <div id="filelist">No runtime found.</div>
+    <br />
+    <a id="uploader-select" href="#">[Select files]</a>
+    <a id="uploadfiles" href="#">[Upload files]</a>
+  </div>
+
   <p><%= f.text_area :content %></p>
   <p><%= f.submit 'Сохранить' %></p>
 <% end %>

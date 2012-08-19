@@ -11,6 +11,7 @@
  *= require foundation
  *= require_self
  *= require comments
+ *= require posts
  */
 
 /* Artfully masterminded by ZURB  */

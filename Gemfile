@@ -9,6 +9,8 @@ gem 'mysql2'
 gem 'russian'
 gem 'kaminari'
 gem 'jquery-rails'
+gem 'mini_magick'
+gem 'carrierwave'
 
 
 # Gems used only for assets and not required

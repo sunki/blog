@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  thumb_width: 1
+  thumb_height: 1
+  main_width: 1
+  main_height: 1
+
+two:
+  name: MyString
+  thumb_width: 1
+  thumb_height: 1
+  main_width: 1
+  main_height: 1

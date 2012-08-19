@@ -16,6 +16,7 @@ Blog::Application.routes.draw do
   end
 
   resources :comments
+  resources :photos
 
   # Sample resource route with options:
   #   resources :products do
